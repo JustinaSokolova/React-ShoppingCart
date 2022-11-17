@@ -1,53 +1,38 @@
-import React, {useState} from "react"
+import React from "react"
 
-const Counter = () => {
-    const [count, setCount] = useState(0);
-    const [tags, setTags] = useState(["tag1", "tag2", "tag3"])
+const Counter = (props) => {
+    const {value} = props;
 
-    const formatCount = () => {
-        return count === 0 ? "empty" : count;
+    const formatValue = () => {
+        return value === 0 ? "empty" : value;
     }
 
     const getBadgeClasses = () => {
         let classes = "badge p-2 m-2 ";
-        classes += count === 0 ? "bg-warning" : "bg-primary";
+        classes += value === 0 ? "bg-warning" : "bg-primary";
         return classes;
-    }
-    
-    const handleIncrement = () => {
-        setCount((prevState) => prevState + 1);
-    }
-
-    const handleDecrement = () => {
-        setCount((prevState) => prevState - 1);
-    }
-
-    const handleTagChange = (id) => {
-        setTags((prevState) => prevState.filter(tag => tag !== id))
-    }
-
-    const renderTags = () => {
-        return tags.length !== 0 ?
-        tags.map((tag) => (
-            <li key={tag} className="btn btn-primary btm-sm m-2" onClick={() => handleTagChange(tag)}>{tag}</li>
-        )) : "No tags";
     }
 
     return (
-        <>
-            <ul>
-            {renderTags()}
-            </ul>
-          
-            <span className={getBadgeClasses()}>{formatCount()}</span>
-            <button className="btn btn-primary btm-sm m-2" onClick={handleIncrement}>+</button>
-            <button className="btn btn-primary btm-sm m-2" onClick={handleDecrement}>-</button>
-        </>
+        <div>
+            <span>{props.name}</span>
+            <span className={getBadgeClasses()}>{formatValue()}</span>
+            <button className="btn btn-primary btm-sm m-2" onClick={()=>props.onIncrement(props.id)}>+</button>
+            <button className="btn btn-primary btm-sm m-2" onClick={()=>props.onDecrement(props.id)}>-</button>
+            <button className="btn btn-danger btm-sm m-2" onClick={()=>props.onDelete(props.id)}>Delete</button>
+        </div>
     )
 };
 
 export default Counter;
 
+
+
+
 // хук useState() - асинхронный; инструмент для хранения и обновления данных в "хранилище"; 
 // возвращает кортеж(массив, в кот строгая последовательность элементов): 
-// [count, setCount] = count - состояние; setCount - функция, которая обновляет состояние
+// [value, setValue] = value - состояние; setvalue - функция, которая обновляет состояние
+
+// props - некий объект, в который мы можем передавать атрибуты и эти атрибуты будут свойствами данного компонента; доступ только для чтения, не изменяются
+// state - включает данные, которые локальные/частные для этого компонента; другие компоненты не могут получить доступ к этому состоянию - полностью изолированные данные
+// ПРАВИЛО: компонент, которому принадлежит часть состояний, должен быть тем, что его модифицирует!
