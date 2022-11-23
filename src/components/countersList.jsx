@@ -1,5 +1,9 @@
 import React, {useState} from "react";
+import ButtonRefresh from "./buttonRefresh";
+import ButtonDelete from "./buttonDelete";
 import Counter from "./counter";
+import Navbar from "./navbar";
+
 
 const CountersList = () => {
     const initialState = [
@@ -10,15 +14,11 @@ const CountersList = () => {
         {id: 4, value: 0, name: "Набор минималиста"},
         ];
 
-    const [counters, setCounters ]= useState(initialState);
+    const [counters, setCounters ] = useState(initialState);
 
     const handleDelete = (id) => {
         const newCounters = counters.filter((c) => c.id !== id);
         setCounters(newCounters)
-    }
-
-    const handleReset = () => {
-        setCounters(initialState)
     }
     
     const handleIncrement = (id) => {
@@ -41,11 +41,21 @@ const CountersList = () => {
         setCounters(countDec);
     }
 
+
     return <>
-    {counters.map((count) => (
-        <Counter key={count.id} {...count} onDelete={handleDelete} onIncrement={handleIncrement} onDecrement={handleDecrement}/>
-    ))}
-        <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>Сброс</button>
+        <div className="d-inline-flex flex-column align-content-start w-50 m-4">
+            {<Navbar counters={counters}/>}
+            <div>
+                {counters.map((count) => (
+                    <Counter key={count.id} {...count} onDelete={handleDelete} onIncrement={handleIncrement} onDecrement={handleDecrement}/>
+                ))}
+              <div className="d-flex">
+                    {<ButtonDelete setCounters={setCounters}/>} 
+                    {<ButtonRefresh initialState={initialState} setCounters={setCounters}/>} 
+                </div>  
+                   
+            </div>
+        </div>
 
     </>
 }
