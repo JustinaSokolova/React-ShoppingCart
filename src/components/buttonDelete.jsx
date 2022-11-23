@@ -7,7 +7,7 @@ const ButtonDelete = (props) => {
     }
 
     return <>
-        <button className="btn btn-primary btn-m m-2 d-flex align-items-center justify-content-center" onClick={handleDelete}>
+        <button className="btn btn-primary btn-m m-2 d-flex" onClick={handleDelete}>
             Очистить</button>
     </>
 }
