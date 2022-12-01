@@ -19,6 +19,7 @@ const Counter = (props) => {
             <div className="justify-content-center align-self-center w-25">
                 <p className={getBadgeClasses() + " align-self-center"}>{formatValue()}</p>
             </div>
+            <p className="align-self-center bd-highlight mb-0 ms-2 fs-4 w-25">{props.price + " $"}</p>
             <div className="btn-group btn-block btn-sm m-2">
                 <button className="btn btn-primary" aria-current="page" onClick={()=>props.onIncrement(props.id)}>+</button>
                 <button className="btn btn-primary" onClick={()=>props.onDecrement(props.id)}>-</button>
